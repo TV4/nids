@@ -1,10 +1,8 @@
 package nid
 
-import (
-	"testing"
-)
+import "testing"
 
-func TestNidCase(t *testing.T) {
+func TestCase(t *testing.T) {
 	for _, tt := range []struct {
 		in   string
 		want string
@@ -51,7 +49,31 @@ func TestNidCase(t *testing.T) {
 	}
 }
 
-func TestNidPossible(t *testing.T) {
+func BenchmarkCase_empty(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		Case("")
+	}
+}
+
+func BenchmarkCase_ignore(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		Case("kale8^79'0-")
+	}
+}
+
+func BenchmarkCase_squish(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		Case(" Fångarna     på  fortet   ")
+	}
+}
+
+func BenchmarkCase_diacritical(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		Case("Dürén Ibrahimović")
+	}
+}
+
+func TestPossible(t *testing.T) {
 	for _, tt := range []struct {
 		in   string
 		want bool
@@ -75,6 +97,19 @@ func TestNidPossible(t *testing.T) {
 	} {
 		if got := Possible(tt.in); got != tt.want {
 			t.Errorf(`nid.Possible(%q) = %v, want %v`, tt.in, got, tt.want)
+		}
+	}
+}
+
+func TestSquish(t *testing.T) {
+	for _, tt := range []struct {
+		in   string
+		want string
+	}{
+		{" foo  bar   baz   ", "foo bar baz"},
+	} {
+		if got := squish(tt.in); got != tt.want {
+			t.Errorf(`squish(%q) = %q, want %q`, tt.in, got, tt.want)
 		}
 	}
 }
