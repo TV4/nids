@@ -1,3 +1,30 @@
+/*
+
+Package nid is used to create nids (slugs/tags)
+
+Installation
+
+Just go get the package:
+
+    go get -u github.com/TV4/nid
+
+Usage
+
+A small usage example
+
+    package main
+
+    import (
+    	"fmt"
+
+    	"github.com/TV4/nid"
+    )
+
+    func main() {
+    	fmt.Println(nid.Case("Let's_Dance ")) // lets-dance
+    }
+
+*/
 package nid
 
 import (
