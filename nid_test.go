@@ -1,6 +1,9 @@
 package nid
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestCase(t *testing.T) {
 	for _, tt := range []struct {
@@ -47,6 +50,11 @@ func TestCase(t *testing.T) {
 			t.Errorf(`nid.Case(%q) = %q, want %q`, tt.in, got, tt.want)
 		}
 	}
+}
+
+func ExampleCase() {
+	fmt.Println(Case("Let's_Dance "))
+	// Output: lets-dance
 }
 
 func BenchmarkCase_empty(b *testing.B) {
@@ -99,6 +107,11 @@ func TestPossible(t *testing.T) {
 			t.Errorf(`nid.Possible(%q) = %v, want %v`, tt.in, got, tt.want)
 		}
 	}
+}
+
+func ExamplePossible() {
+	fmt.Println(Possible("Zlatan Ibrahimović"))
+	// Output: false
 }
 
 func TestSquish(t *testing.T) {
