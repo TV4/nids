@@ -34,11 +34,10 @@ import (
 
 var (
 	validPattern  = regexp.MustCompile(`\A[0-9a-zåäö-]*\z`)
-	squishPattern = regexp.MustCompile(`(\s+)`)
-	stripPattern  = regexp.MustCompile(`([^0-9a-zåäö-])`)
+	squishPattern = regexp.MustCompile(`\s+`)
+	stripPattern  = regexp.MustCompile(`[^0-9a-zåäö-]`)
 
 	dashSpace = strings.NewReplacer("-", " ")
-	spaceDash = strings.NewReplacer(" ", "-", "_", "-")
 )
 
 // Case returns a nid based on the input text
@@ -47,7 +46,7 @@ func Case(text string) string {
 		return ""
 	}
 
-	return cleanup(transliterate(squish(prepare(text))))
+	return strip(transliterate(squish(prepare(text))))
 }
 
 // Possible checks if a candidate string is a possible nid
@@ -55,8 +54,8 @@ func Possible(candidate string) bool {
 	return validPattern.MatchString(candidate)
 }
 
-func cleanup(s string) string {
-	return stripPattern.ReplaceAllString(spaceDash.Replace(s), "")
+func strip(s string) string {
+	return stripPattern.ReplaceAllString(s, "")
 }
 
 func transliterate(s string) string {
@@ -64,14 +63,16 @@ func transliterate(s string) string {
 }
 
 func squish(s string) string {
-	return squishPattern.ReplaceAllString(strings.TrimSpace(s), " ")
+	return squishPattern.ReplaceAllString(s, " ")
 }
 
 func prepare(s string) string {
-	return dashSpace.Replace(strings.ToLower(s))
+	return strings.TrimSpace(dashSpace.Replace(strings.ToLower(s)))
 }
 
 var transliterations = strings.NewReplacer(
+	" ", "-",
+	"_", "-",
 	"À", "A",
 	"Á", "A",
 	"Â", "A",
