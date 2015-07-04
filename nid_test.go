@@ -57,6 +57,30 @@ func ExampleCase() {
 	// Output: lets-dance
 }
 
+func BenchmarkPartial_prepare(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		prepare("Dürén Ibrahimović")
+	}
+}
+
+func BenchmarkPartial_prepareSquish(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		squish(prepare("Dürén Ibrahimović"))
+	}
+}
+
+func BenchmarkPartial_prepareSquishTransliterate(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		transliterate(squish(prepare("Dürén Ibrahimović")))
+	}
+}
+
+func BenchmarkPartial_prepareSquishTransliterateStrip(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		strip(transliterate(squish(prepare("Dürén Ibrahimović"))))
+	}
+}
+
 func BenchmarkCase_empty(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Case("")
@@ -119,7 +143,7 @@ func TestSquish(t *testing.T) {
 		in   string
 		want string
 	}{
-		{" foo  bar   baz   ", "foo bar baz"},
+		{"foo  bar   baz", "foo bar baz"},
 	} {
 		if got := squish(tt.in); got != tt.want {
 			t.Errorf(`squish(%q) = %q, want %q`, tt.in, got, tt.want)
