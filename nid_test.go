@@ -19,6 +19,15 @@ func TestCase(t *testing.T) {
 		// should downcase all chars in the Swedish alphabet
 		{"ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ", "abcdefghijklmnopqrstuvwxyzåäö"},
 
+		// should transliterate
+		{"_ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜ", "-aaaaäåäceeeeiiiidnooooöxöuuuu"},
+		{"ÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúû", "ythssaaaaäåäceeeeiiiidnooooööuuu"},
+		{"üýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘę", "uythyaaaaaaccccccccddddeeeeeeee"},
+		{"ĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķ", "eegggggggghhhhiiiiiiiiiiijijjjkk"},
+		{"ĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕ", "kllllllllllnnnnnnnngngoooooooeoerr"},
+		{"ŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲų", "rrrrssssssssttttttuuuuuuuuuuuu"},
+		{"ŴŵŶŷŸŹźŻżŽž", "wwyyyzzzzzz"},
+
 		// should ignore all chars not included in a-z, åäö, -, 0-9
 		{"kale8^79'0-", "kale8790"},
 
