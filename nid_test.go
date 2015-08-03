@@ -20,7 +20,7 @@ func TestCase(t *testing.T) {
 		{"ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ", "abcdefghijklmnopqrstuvwxyzåäö"},
 
 		// should transliterate
-		{"_ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜ", "-aaaaäåäceeeeiiiidnooooöxöuuuu"},
+		{"ÀÁÂÃÄÅÆÇ_ÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜ", "aaaaäåäc-eeeeiiiidnooooöxöuuuu"},
 		{"ÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúû", "ythssaaaaäåäceeeeiiiidnooooööuuu"},
 		{"üýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘę", "uythyaaaaaaccccccccddddeeeeeeee"},
 		{"ĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķ", "eegggggggghhhhiiiiiiiiiiijijjjkk"},
@@ -48,6 +48,7 @@ func TestCase(t *testing.T) {
 
 		// converts _ to -
 		{"Let's_Dance", "lets-dance"},
+		{"N___F5__9hf3m2iDyO4F__rjyD", "n-f5-9hf3m2idyo4f-rjyd"},
 
 		// removes -- from name
 		{"Let's -- da-da-dance", "lets-da-da-dance"},
