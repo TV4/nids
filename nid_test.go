@@ -17,11 +17,11 @@ func TestCase(t *testing.T) {
 		{"foo bar bee", "foo-bar-bee"},
 
 		// should downcase all chars in the Swedish alphabet
-		{"ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ", "abcdefghijklmnopqrstuvwxyzåäö"},
+		{"ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ", "abcdefghijklmnopqrstuvwxyzaao"},
 
 		// should transliterate
-		{"ÀÁÂÃÄÅÆÇ_ÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜ", "aaaaäåäc-eeeeiiiidnooooöxöuuuu"},
-		{"ÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúû", "ythssaaaaäåäceeeeiiiidnooooööuuu"},
+		{"ÀÁÂÃÄÅÆÇ_ÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜ", "aaaaaaac-eeeeiiiidnoooooxouuuu"},
+		{"ÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúû", "ythssaaaaaaaceeeeiiiidnoooooouuu"},
 		{"üýþÿĀāĂăĄąĆćĈĉĊċČčĎďĐđĒēĔĕĖėĘę", "uythyaaaaaaccccccccddddeeeeeeee"},
 		{"ĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķ", "eegggggggghhhhiiiiiiiiiiijijjjkk"},
 		{"ĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊŋŌōŎŏŐőŒœŔŕ", "kllllllllllnnnnnnnngngoooooooeoerr"},
@@ -34,8 +34,8 @@ func TestCase(t *testing.T) {
 		// should convert diacritical characters
 		{"Dürén Ibrahimović", "duren-ibrahimovic"},
 
-		// preserves åäö ÅÄÖ
-		{"ÅÄÖåäö", "åäöåäö"},
+		// does not preserve åäö
+		{"ÅÄÖåäö", "aaoaao"},
 
 		// converts `¨´^
 		{"ÈÉËÊèéëê", "eeeeeeee"},
@@ -44,7 +44,7 @@ func TestCase(t *testing.T) {
 		{"ČĆÇčćç", "cccccc"},
 		{"Ññ", "nn"},
 		{"Ïï", "ii"},
-		{"ÆØæø", "äöäö"},
+		{"ÆØæø", "aoao"},
 
 		// converts _ to -
 		{"Let's_Dance", "lets-dance"},
@@ -54,7 +54,7 @@ func TestCase(t *testing.T) {
 		{"Let's -- da-da-dance", "lets-da-da-dance"},
 
 		// removes surrounding and double space from name and tag
-		{" Fångarna     på  fortet   ", "fångarna-på-fortet"},
+		{" Fångarna     på  fortet   ", "fangarna-pa-fortet"},
 	} {
 		if got := Case(tt.in); got != tt.want {
 			t.Errorf(`nid.Case(%q) = %q, want %q`, tt.in, got, tt.want)
@@ -123,8 +123,8 @@ func TestPossible(t *testing.T) {
 		// accepts nothingness
 		{"", true},
 
-		// accepts åäö
-		{"räksmörgås", true},
+		// does not accept åäö
+		{"räksmörgås", false},
 
 		// rejects diacritical marks
 		{"dürén-ibrahimović", false},

@@ -33,9 +33,9 @@ import (
 )
 
 var (
-	validPattern  = regexp.MustCompile(`\A[0-9a-zåäö-]*\z`)
+	validPattern  = regexp.MustCompile(`\A[0-9a-z-]*\z`)
 	squishPattern = regexp.MustCompile(`\s+`)
-	stripPattern  = regexp.MustCompile(`[^0-9a-zåäö-]`)
+	stripPattern  = regexp.MustCompile(`[^0-9a-z-]`)
 
 	dashSpace = strings.NewReplacer("-", " ", "_", " ")
 )
@@ -79,9 +79,9 @@ var transliterations = strings.NewReplacer(
 	"á", "a",
 	"â", "a",
 	"ã", "a",
-	"ä", "ä",
-	"å", "å",
-	"æ", "ä",
+	"ä", "a",
+	"å", "a",
+	"æ", "a",
 	"ç", "c",
 	"è", "e",
 	"é", "e",
@@ -97,8 +97,8 @@ var transliterations = strings.NewReplacer(
 	"ó", "o",
 	"ô", "o",
 	"õ", "o",
-	"ö", "ö",
-	"ø", "ö",
+	"ö", "o",
+	"ø", "o",
 	"ù", "u",
 	"ú", "u",
 	"û", "u",
