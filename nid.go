@@ -37,7 +37,7 @@ var (
 	squishPattern = regexp.MustCompile(`\s+`)
 	stripPattern  = regexp.MustCompile(`[^0-9a-z-]`)
 
-	dashSpace = strings.NewReplacer("-", " ", "_", " ")
+	dashSpace = strings.NewReplacer("-", " ", "_", " ", "–", " ", "—", " ")
 )
 
 // Case returns a nid based on the input text

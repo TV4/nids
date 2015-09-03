@@ -55,6 +55,10 @@ func TestCase(t *testing.T) {
 
 		// removes surrounding and double space from name and tag
 		{" Fångarna     på  fortet   ", "fangarna-pa-fortet"},
+
+		// removes –, —
+		{"Arn – Tempelriddaren", "arn-tempelriddaren"},
+		{"Arn — Tempelriddaren", "arn-tempelriddaren"},
 	} {
 		if got := Case(tt.in); got != tt.want {
 			t.Errorf(`nid.Case(%q) = %q, want %q`, tt.in, got, tt.want)
