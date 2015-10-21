@@ -71,49 +71,49 @@ func ExampleCase() {
 	// Output: lets-dance
 }
 
-func BenchmarkPartial_prepare(b *testing.B) {
+func BenchmarkPartialPrepare(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		prepare("Dürén Ibrahimović")
 	}
 }
 
-func BenchmarkPartial_prepareSquish(b *testing.B) {
+func BenchmarkPartialPrepareSquish(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		squish(prepare("Dürén Ibrahimović"))
 	}
 }
 
-func BenchmarkPartial_prepareSquishTransliterate(b *testing.B) {
+func BenchmarkPartialPrepareSquishTransliterate(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		transliterate(squish(prepare("Dürén Ibrahimović")))
 	}
 }
 
-func BenchmarkPartial_prepareSquishTransliterateStrip(b *testing.B) {
+func BenchmarkPartialPrepareSquishTransliterateStrip(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		strip(transliterate(squish(prepare("Dürén Ibrahimović"))))
 	}
 }
 
-func BenchmarkCase_empty(b *testing.B) {
+func BenchmarkCaseEmpty(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Case("")
 	}
 }
 
-func BenchmarkCase_ignore(b *testing.B) {
+func BenchmarkCaseIgnore(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Case("kale8^79'0-")
 	}
 }
 
-func BenchmarkCase_squish(b *testing.B) {
+func BenchmarkCaseSquish(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Case(" Fångarna     på  fortet   ")
 	}
 }
 
-func BenchmarkCase_diacritical(b *testing.B) {
+func BenchmarkCaseDiacritical(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Case("Dürén Ibrahimović")
 	}
