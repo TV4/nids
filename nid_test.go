@@ -59,6 +59,11 @@ func TestCase(t *testing.T) {
 		// removes –, —
 		{"Arn – Tempelriddaren", "arn-tempelriddaren"},
 		{"Arn — Tempelriddaren", "arn-tempelriddaren"},
+
+		// replaces repeating dashes with single dash
+		{"Alvinnn!! & the Chipmunks", "alvinnn-the-chipmunks"},
+		{"alvinnn--the---chipmunks", "alvinnn-the-chipmunks"},
+		{"alvinnn--the-chipmunks", "alvinnn-the-chipmunks"},
 	} {
 		if got := Case(tt.in); got != tt.want {
 			t.Errorf(`nid.Case(%q) = %q, want %q`, tt.in, got, tt.want)
@@ -129,6 +134,9 @@ func TestPossible(t *testing.T) {
 
 		// does not accept åäö
 		{"räksmörgås", false},
+
+		// rejects double dashes
+		{"foo--bar", false},
 
 		// rejects diacritical marks
 		{"dürén-ibrahimović", false},

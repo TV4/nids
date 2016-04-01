@@ -36,6 +36,7 @@ var (
 	validPattern  = regexp.MustCompile(`\A[0-9a-z-]*\z`)
 	squishPattern = regexp.MustCompile(`\s+`)
 	stripPattern  = regexp.MustCompile(`[^0-9a-z-]`)
+	dashPattern   = regexp.MustCompile("-{1,}")
 
 	dashSpace = strings.NewReplacer("-", " ", "_", " ", "–", " ", "—", " ")
 )
@@ -51,11 +52,15 @@ func Case(text string) string {
 
 // Possible checks if a candidate string is a possible nid
 func Possible(candidate string) bool {
+	if strings.Contains(candidate, "--") {
+		return false
+	}
+
 	return validPattern.MatchString(candidate)
 }
 
 func strip(s string) string {
-	return stripPattern.ReplaceAllString(s, "")
+	return dashPattern.ReplaceAllString(stripPattern.ReplaceAllString(s, ""), "-")
 }
 
 func transliterate(s string) string {
