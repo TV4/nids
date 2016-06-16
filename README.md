@@ -12,9 +12,40 @@ The nid package is used to create nids (slugs/tags)
 
 You probably want to vendor this package using [Godep](https://github.com/tools/godep)
 
+## Usage
+
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+
+	"github.com/TV4/nid"
+)
+
+func main() {
+	for i, s := range os.Args[1:] {
+		if nid.Possible(s) {
+			fmt.Printf("[%d] the string %q is already a nid.\n", i, s)
+		} else {
+			fmt.Printf("[%d] nid of %q is %q\n", i, s, nid.Case(s))
+		}
+	}
+}
+```
+
+```bash
+$ go run n.go 'Dürén Ibrahimović' 'Alvinnn!! & the Chipmunks' 'kale8^79_0-' foo-bar
+[0] nid of "Dürén Ibrahimović" is "duren-ibrahimovic"
+[1] nid of "Alvinnn!! & the Chipmunks" is "alvinnn-the-chipmunks"
+[2] nid of "kale8^79_0-" is "kale879-0"
+[3] the string "foo-bar" is already a nid.
+```
+
 ## License (MIT)
 
-Copyright (c) 2015 TV4
+Copyright (c) 2015-2016 TV4
 
 > Permission is hereby granted, free of charge, to any person obtaining
 > a copy of this software and associated documentation files (the
