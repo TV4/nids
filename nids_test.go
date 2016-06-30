@@ -1,4 +1,4 @@
-package nid
+package nids
 
 import (
 	"fmt"
@@ -10,7 +10,7 @@ func TestCase(t *testing.T) {
 	for i, tt := range []struct {
 		in   string
 		want string
-		nid  *Nid
+		nids *Nids
 	}{
 		// should nid case "" to ""
 		{"", "", Default},
@@ -78,8 +78,8 @@ func TestCase(t *testing.T) {
 		{"alvinnn--the---chipmunks", "alvinnn-the-chipmunks", Default},
 		{"alvinnn--the-chipmunks", "alvinnn-the-chipmunks", Default},
 	} {
-		if got := tt.nid.Case(tt.in); got != tt.want {
-			t.Fatalf(`[%d] tt.nid.Case(%q) = %q, want %q`, i, tt.in, got, tt.want)
+		if got := tt.nids.Case(tt.in); got != tt.want {
+			t.Fatalf(`[%d] tt.nids.Case(%q) = %q, want %q`, i, tt.in, got, tt.want)
 		}
 	}
 }
@@ -141,7 +141,7 @@ func TestPossible(t *testing.T) {
 	for _, tt := range []struct {
 		in   string
 		want bool
-		nid  *Nid
+		nids *Nids
 	}{
 		// does not accept nothingness by default
 		{"", false, Default},
@@ -169,8 +169,8 @@ func TestPossible(t *testing.T) {
 		// rejects upper-case letters
 		{"FOO", false, Default},
 	} {
-		if got := tt.nid.Possible(tt.in); got != tt.want {
-			t.Errorf(`tt.nid.Possible(%q) = %v, want %v`, tt.in, got, tt.want)
+		if got := tt.nids.Possible(tt.in); got != tt.want {
+			t.Errorf(`tt.nids.Possible(%q) = %v, want %v`, tt.in, got, tt.want)
 		}
 	}
 }

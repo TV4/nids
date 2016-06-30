@@ -1,12 +1,12 @@
 /*
 
-Package nid is used to create nids (slugs/tags)
+The nids package is used to create slugs/tags
 
 Installation
 
 Just go get the package:
 
-    go get -u github.com/TV4/nid
+    go get -u github.com/TV4/nids
 
 Usage
 
@@ -17,15 +17,15 @@ A small usage example
     import (
     	"fmt"
 
-    	"github.com/TV4/nid"
+    	"github.com/TV4/nids"
     )
 
     func main() {
-    	fmt.Println(nid.Case("Let's_Dance ")) // lets-dance
+    	fmt.Println(nids.Case("Let's_Dance ")) // lets-dance
     }
 
 */
-package nid
+package nids
 
 import (
 	"regexp"
@@ -49,7 +49,7 @@ func Possible(candidate string) bool {
 }
 
 // Nid contains the configuration used to create and validate nids
-type Nid struct {
+type Nids struct {
 	ValidPattern     *regexp.Regexp
 	SquishPattern    *regexp.Regexp
 	StripPattern     *regexp.Regexp
@@ -59,8 +59,8 @@ type Nid struct {
 }
 
 // New returns a *Nid that implements the Interface
-func New(options ...func(*Nid)) *Nid {
-	n := &Nid{
+func New(options ...func(*Nids)) *Nids {
+	n := &Nids{
 		ValidPattern:     validPattern,
 		SquishPattern:    squishPattern,
 		StripPattern:     stripPattern,
@@ -77,15 +77,15 @@ func New(options ...func(*Nid)) *Nid {
 }
 
 // AllowÅÄÖ is a functional option that can be used in New
-func AllowÅÄÖ(n *Nid) {
+func AllowÅÄÖ(n *Nids) {
 	SetValidPattern(regexp.MustCompile(`\A[0-9a-zåäö-]*\z`))(n) // Note: Allows empty nids
 	SetStripPattern(regexp.MustCompile(`[^0-9a-zåäö-]`))(n)
 	SetTransliterations(transliterationsWithÅÄÖ)(n)
 }
 
 // SetValidPattern is a functional option that can be used in New
-func SetValidPattern(r *regexp.Regexp) func(*Nid) {
-	return func(n *Nid) {
+func SetValidPattern(r *regexp.Regexp) func(*Nids) {
+	return func(n *Nids) {
 		if r != nil {
 			n.ValidPattern = r
 		}
@@ -93,8 +93,8 @@ func SetValidPattern(r *regexp.Regexp) func(*Nid) {
 }
 
 // SetStripPattern is a functional option that can be used in New
-func SetStripPattern(r *regexp.Regexp) func(*Nid) {
-	return func(n *Nid) {
+func SetStripPattern(r *regexp.Regexp) func(*Nids) {
+	return func(n *Nids) {
 		if r != nil {
 			n.StripPattern = r
 		}
@@ -102,8 +102,8 @@ func SetStripPattern(r *regexp.Regexp) func(*Nid) {
 }
 
 // SetTransliterations is a functional option that can be used in New
-func SetTransliterations(r *strings.Replacer) func(*Nid) {
-	return func(n *Nid) {
+func SetTransliterations(r *strings.Replacer) func(*Nids) {
+	return func(n *Nids) {
 		if r != nil {
 			n.Transliterations = r
 		}
@@ -111,7 +111,7 @@ func SetTransliterations(r *strings.Replacer) func(*Nid) {
 }
 
 // Case returns a nid based on the input text
-func (n *Nid) Case(text string) string {
+func (n *Nids) Case(text string) string {
 	if text == "" {
 		return ""
 	}
@@ -120,7 +120,7 @@ func (n *Nid) Case(text string) string {
 }
 
 // Possible checks if a candidate string is a possible nid
-func (n *Nid) Possible(candidate string) bool {
+func (n *Nids) Possible(candidate string) bool {
 	if strings.Contains(candidate, "--") {
 		return false
 	}
@@ -128,19 +128,19 @@ func (n *Nid) Possible(candidate string) bool {
 	return n.ValidPattern.MatchString(candidate)
 }
 
-func (n *Nid) strip(s string) string {
+func (n *Nids) strip(s string) string {
 	return n.DashPattern.ReplaceAllString(n.StripPattern.ReplaceAllString(s, ""), "-")
 }
 
-func (n *Nid) transliterate(s string) string {
+func (n *Nids) transliterate(s string) string {
 	return n.Transliterations.Replace(s)
 }
 
-func (n *Nid) squish(s string) string {
+func (n *Nids) squish(s string) string {
 	return n.SquishPattern.ReplaceAllString(s, " ")
 }
 
-func (n *Nid) prepare(s string) string {
+func (n *Nids) prepare(s string) string {
 	return strings.TrimSpace(n.DashSpace.Replace(strings.ToLower(s)))
 }
 

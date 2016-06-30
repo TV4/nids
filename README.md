@@ -1,16 +1,25 @@
-# nid
+# nids
 
-[![Build Status](https://travis-ci.org/TV4/nid.svg?branch=master)](https://travis-ci.org/TV4/nid)
-[![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat)](https://godoc.org/github.com/TV4/nid)
-[![License MIT](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/TV4/nid#license-mit)
+[![Build Status](https://travis-ci.org/TV4/nids.svg?branch=master)](https://travis-ci.org/TV4/nids)
+[![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat)](https://godoc.org/github.com/TV4/nids)
+[![License MIT](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/TV4/nids#license-mit)
 
-The nid package is used to create nids (slugs/tags)
+The nids package is used to create slugs/tags.
 
 ## Installation
 
-    go get -u github.com/TV4/nid
+    go get -u github.com/TV4/nids
 
 You probably want to vendor this package using [Godep](https://github.com/tools/godep)
+
+# Configuration
+
+Default             | WithÅÄÖ
+--------------------|--------------------
+`\A[0-9a-z-]{1,}\z` | `\A[0-9a-zåäö-]*\z`
+
+The default configuration is meant to be useful for most use-cases, and the specialized WithÅÄÖ configuration
+is meant to match the algorithm used in the [nid_utils](https://github.com/TV4/nid_utils) gem.
 
 ## Usage
 
@@ -21,15 +30,15 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/TV4/nid"
+	"github.com/TV4/nids"
 )
 
 func main() {
 	for i, s := range os.Args[1:] {
-		if nid.Possible(s) {
+		if nids.Possible(s) {
 			fmt.Printf("[%d] the string %q is already a nid.\n", i, s)
 		} else {
-			fmt.Printf("[%d] nid of %q is %q\n", i, s, nid.Case(s))
+			fmt.Printf("[%d] nid of %q is %q\n", i, s, nids.Case(s))
 		}
 	}
 }

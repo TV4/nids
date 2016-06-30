@@ -1,6 +1,6 @@
 // +build gofuzz
 
-package nid
+package nids
 
 func Fuzz(data []byte) int {
 	s := string(data)

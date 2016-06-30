@@ -4,10 +4,10 @@ test:
 	go test -v ./...
 
 fuzz:
-	go-fuzz -bin=./nid-fuzz.zip -workdir=workdir
+	go-fuzz -bin=./nids-fuzz.zip -workdir=workdir
 
 fuzz-build:
-	go-fuzz-build github.com/TV4/nid
+	go-fuzz-build github.com/TV4/nids
 
 fuzz-clean:
-	rm -rf nid-fuzz.zip workdir
+	rm -rf nids-fuzz.zip workdir
