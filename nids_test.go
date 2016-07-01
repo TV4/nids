@@ -78,8 +78,15 @@ func TestCase(t *testing.T) {
 		{"alvinnn--the---chipmunks", "alvinnn-the-chipmunks", Default},
 		{"alvinnn--the-chipmunks", "alvinnn-the-chipmunks", Default},
 	} {
-		if got := tt.nids.Case(tt.in); got != tt.want {
+		got := tt.nids.Case(tt.in)
+
+		if got != tt.want {
 			t.Fatalf(`[%d] tt.nids.Case(%q) = %q, want %q`, i, tt.in, got, tt.want)
+		}
+
+		// Make sure that tt.nids.Case is invariant
+		if got != tt.nids.Case(got) {
+			t.Fatalf(`[%d] tt.nids.Case is not invariant`, i)
 		}
 	}
 }
