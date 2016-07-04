@@ -1,6 +1,6 @@
 /*
 
-The nids package is used to create slugs/tags
+Package nids is used to create slugs/tags
 
 Installation
 
@@ -48,7 +48,7 @@ func Possible(candidate string) bool {
 	return Default.Possible(candidate)
 }
 
-// Nid contains the configuration used to create and validate nids
+// Nids contains the configuration used to create and validate nids
 type Nids struct {
 	ValidPattern     *regexp.Regexp
 	SquishPattern    *regexp.Regexp
