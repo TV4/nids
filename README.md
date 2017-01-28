@@ -1,6 +1,7 @@
 # nids
 
 [![Build Status](https://travis-ci.org/TV4/nids.svg?branch=master)](https://travis-ci.org/TV4/nids)
+[![Go Report Card](https://goreportcard.com/badge/github.com/TV4/nids)](https://goreportcard.com/report/github.com/TV4/nids)
 [![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat)](https://godoc.org/github.com/TV4/nids)
 [![License MIT](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/TV4/nids#license-mit)
 
