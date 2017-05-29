@@ -11,7 +11,7 @@ The nids package is used to create slugs/tags.
 
     go get -u github.com/TV4/nids
 
-You probably want to vendor this package using [Godep](https://github.com/tools/godep)
+You probably want to vendor this package using your favorite vendoring tool.
 
 # Configuration
 
